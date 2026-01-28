@@ -333,4 +333,174 @@ render(tv,"tvList");
 </script>
 
 </body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mo2Men Telefon | سوق المحمول طبرق</title>
+
+<style>
+body{margin:0;font-family:tahoma;background:#0f0f0f;color:#fff}
+header{text-align:center;padding:15px;border-bottom:2px solid orange}
+header h1,header h3{color:orange;margin:4px 0}
+header h4{color:#ccc;margin:0}
+
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;background:#1a1a1a;padding:10px}
+nav button{background:#222;color:#fff;border:1px solid orange;padding:8px;cursor:pointer}
+nav button:hover{background:orange;color:#000}
+
+.section{display:none;padding:15px}
+.section.active{display:block}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
+.card{background:#1c1c1c;border:1px solid #333;padding:10px;text-align:center}
+.card img{width:100%;height:140px;object-fit:cover}
+.card h4{color:orange;margin:6px 0}
+.price{color:#ccc}
+.guarantee{font-size:12px;color:#25d366;margin-top:4px}
+
+button{border:none;padding:6px;cursor:pointer}
+.cartBtn{background:orange}
+.whatsBtn{background:#25d366;color:#000}
+
+#cartBox{
+position:fixed;bottom:10px;left:10px;
+background:#000;border:2px solid orange;
+padding:10px;width:260px;max-height:300px;overflow:auto;z-index:999
+}
+#cartBox h4{color:orange;margin:5px 0}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Mo2Men Telefon</h1>
+<h3>سوق المحمول</h3>
+<h4>طبرق</h4>
+<p style="color:#aaa;font-size:13px">بيع • شراء • صيانة • شاشات • ستلايت</p>
+</header>
+
+<nav>
+<button onclick="show('phones')">📱 جديد</button>
+<button onclick="show('used')">♻️ مستعمل</button>
+<button onclick="show('acc')">🎧 إكسسوارات</button>
+<button onclick="show('service')">🛠️ صيانة</button>
+<button onclick="show('tv')">📺 شاشات وستلايت</button>
+<button onclick="show('sell')">💰 بيع تليفونك</button>
+</nav>
+
+<section id="phones" class="section active"><div class="grid" id="phonesList"></div></section>
+<section id="used" class="section"><div class="grid" id="usedList"></div></section>
+<section id="acc" class="section"><div class="grid" id="accList"></div></section>
+
+<section id="service" class="section">
+<div class="grid">
+<div class="card"><h4>تغيير شاشة</h4><div class="guarantee">ضمان 15 يوم</div><button class="whatsBtn" onclick="whats('تغيير شاشة')">واتساب</button></div>
+<div class="card"><h4>بطارية</h4><div class="guarantee">ضمان 15 يوم</div><button class="whatsBtn" onclick="whats('تغيير بطارية')">واتساب</button></div>
+<div class="card"><h4>سوفت وير</h4><button class="whatsBtn" onclick="whats('سوفت وير')">واتساب</button></div>
+<div class="card"><h4>كشف عطل</h4><button class="whatsBtn" onclick="whats('كشف عطل')">واتساب</button></div>
+</div>
+</section>
+
+<section id="tv" class="section"><div class="grid" id="tvList"></div></section>
+
+<section id="sell" class="section">
+<div class="card">
+<h4>بيع تليفونك</h4>
+<p style="font-size:14px;color:#ccc">
+ابعتلنا:
+<br>• نوع الموبايل  
+<br>• المساحة  
+<br>• الحالة  
+<br>• صور لو متاحة
+</p>
+<div class="guarantee">تقييم سريع – سعر عادل</div>
+<button class="whatsBtn" onclick="whats('عاوز ابيع تليفون')">تواصل واتساب</button>
+</div>
+</section>
+
+<div id="cartBox">
+<h4>🛒 السلة</h4>
+<ul id="cart"></ul>
+<p id="total"></p>
+<button class="whatsBtn" onclick="sendOrder()">إرسال الطلب</button>
+</div>
+
+<a href="https://wa.me/218921234133"
+style="position:fixed;right:15px;bottom:15px;
+background:#25d366;color:#000;
+padding:14px;border-radius:50%;
+font-size:22px;text-decoration:none">💬</a>
+
+<script>
+const phones=[
+{name:"Samsung A15",price:850},
+{name:"Redmi Note 12",price:1150},
+{name:"iPhone 11",price:2300}
+];
+const used=[
+{name:"Samsung A10 مستعمل",price:400},
+{name:"iPhone X مستعمل",price:1600}
+];
+const acc=[
+{name:"سماعة بلوتوث",price:120},
+{name:"شاحن سريع",price:90},
+{name:"كابل شحن",price:30}
+];
+const tv=[
+{name:"Samsung 43 Smart",price:2300},
+{name:"Toshiba 50 LED",price:2000},
+{name:"Sony 55 Android",price:3050}
+];
+
+let cartData=[];
+
+function show(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function render(data,id){
+let box=document.getElementById(id);
+box.innerHTML="";
+data.forEach(i=>{
+box.innerHTML+=`
+<div class="card">
+<img src="https://via.placeholder.com/300x200">
+<h4>${i.name}</h4>
+<p class="price">${i.price} د</p>
+<div class="guarantee">ضمان 15 يوم</div>
+<button class="cartBtn" onclick="add('${i.name}',${i.price})">سلة</button>
+<button class="whatsBtn" onclick="whats('${i.name}')">واتساب</button>
+</div>`;
+});
+}
+
+function add(n,p){
+cartData.push({n,p});
+updateCart();
+}
+function updateCart(){
+let t=0;cart.innerHTML="";
+cartData.forEach(i=>{cart.innerHTML+=`<li>${i.n} - ${i.p} د</li>`;t+=i.p});
+total.innerText="الإجمالي: "+t+" د";
+}
+function sendOrder(){
+let msg="طلب جديد:%0A";
+cartData.forEach(i=>msg+=`${i.n} - ${i.p} د%0A`);
+window.open("https://wa.me/218921234133?text="+msg);
+}
+function whats(msg){
+window.open(`https://wa.me/218921234133?text=${encodeURIComponent(msg)}`);
+}
+
+render(phones,"phonesList");
+render(used,"usedList");
+render(acc,"accList");
+render(tv,"tvList");
+</script>
+
+</body>
 </html>
