@@ -3,289 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mo2Men Telefon</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Mo2Men Telefon | سوق المحمول طبرق</title>
 
 <style>
-body{
-  margin:0;
-  font-family:'Cairo',sans-serif;
-  background:#0f172a;
-  color:#fff;
-}
-header{
-  text-align:center;
-  padding:20px;
-  background:#020617;
-}
-h1,h2,h3,h4{color:#f97316}
-header p{color:#fdba74}
+body{margin:0;font-family:tahoma;background:#0f0f0f;color:#fff}
+header{text-align:center;padding:15px;border-bottom:2px solid orange}
+header h1,header h3{color:orange;margin:4px 0}
+header h4{color:#ccc;margin:0;font-weight:normal}
 
-nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  justify-content:center;
-  background:#020617;
-  padding:10px;
-}
-nav button{
-  background:#1e293b;
-  color:#fff;
-  border:none;
-  padding:10px 14px;
-  border-radius:8px;
-  cursor:pointer;
-}
-nav button:hover{opacity:.85}
+.controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;background:#1a1a1a;padding:10px}
+select{background:#111;color:#fff;border:1px solid orange;padding:6px}
 
-.section{display:none;padding:20px}
-.section.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px;padding:15px}
+.card{background:#1c1c1c;border:1px solid #333;padding:10px;text-align:center}
+.card img{width:100%;height:140px;object-fit:cover}
+.card h4{color:orange;margin:6px 0}
+.type{font-size:12px;color:#aaa}
+.price{color:#ccc}
+.guarantee{font-size:12px;color:#25d366;margin-top:4px}
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:15px;
-}
+button{border:none;padding:6px;cursor:pointer}
+.whatsBtn{background:#25d366;color:#000}
+.cartBtn{background:orange}
 
-.card{
-  background:#020617;
-  padding:15px;
-  border-radius:10px;
-  transition:.2s;
+#cartBox{
+position:fixed;
+bottom:10px;
+left:10px;
+background:#000;
+border:2px solid orange;
+padding:10px;
+width:260px;
+max-height:300px;
+overflow:auto;
+z-index:999
 }
-.card:hover{transform:scale(1.03)}
-.card img{
-  width:100%;
-  border-radius:8px;
-  margin-bottom:10px;
-}
-
-input,select{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:8px;
-  border:none;
-}
-
-footer{
-  text-align:center;
-  padding:15px;
-  background:#020617;
-  color:#f97316;
-}
-
-.whatsapp{
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  background:#25D366;
-  color:#fff;
-  padding:15px;
-  border-radius:50%;
-  text-decoration:none;
-}
-
-@media(max-width:600px){
-  nav button{flex:1 1 45%}
-}
+#cartBox h4{color:orange;margin:5px 0}
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>📱 Mo2Men Telefon</h1>
-  <p>بيع • شراء • صيانة • مستعمل</p>
+<header id="admin">
+<h1>Mo2Men Telefon</h1>
+<h3>سوق المحمول</h3>
+<h4>طبرق</h4>
+<p style="color:#aaa;font-size:13px">شاشات • ستلايت • بيع مباشر • ضمان</p>
 </header>
 
-<nav>
-  <button onclick="showSection('products')">الموبايلات</button>
-  <button onclick="showSection('used')">المستعمل</button>
-  <button onclick="showSection('sell')">بيع تليفونك</button>
-  <button onclick="showSection('parts')">قطع الغيار</button>
-  <button onclick="showSection('repair')">الصيانة</button>
-  <button onclick="showSection('cart')">السلة</button>
-  <button onclick="showSection('admin')">الإدارة</button>
-</nav>
+<div class="controls">
+<select id="brand" onchange="render()">
+<option value="all">كل الماركات</option>
+<option value="Samsung">Samsung</option>
+<option value="Toshiba">Toshiba</option>
+<option value="Sony">Sony</option>
+<option value="Other">ستلايت</option>
+</select>
 
-<main>
+<select id="size" onchange="render()">
+<option value="all">كل الأحجام</option>
+<option value="32">32</option>
+<option value="40">40</option>
+<option value="43">43</option>
+<option value="50">50</option>
+<option value="55">55</option>
+<option value="65">65</option>
+</select>
 
-<section id="products" class="section active">
-  <h2>الموبايلات الجديدة</h2>
-  <div id="productList" class="grid"></div>
-</section>
+<select id="type" onchange="render()">
+<option value="all">كل الأنواع</option>
+<option value="LCD">LCD</option>
+<option value="LED">LED</option>
+<option value="Smart">Smart</option>
+<option value="Android">Android</option>
+</select>
+</div>
 
-<section id="used" class="section">
-  <h2>الموبايلات المستعملة</h2>
-  <div class="grid">
-    <div class="card"><h4>Redmi 9</h4><p>500 د</p></div>
-  </div>
-</section>
+<div class="grid" id="list"></div>
 
-<section id="sell" class="section">
-  <h2>بيع تليفونك</h2>
-  <input id="sellName" placeholder="نوع الموبايل">
-  <input id="sellCondition" placeholder="الحالة">
-  <button onclick="sendSell()">إرسال واتساب</button>
-</section>
+<div id="cartBox">
+<h4>🛒 السلة</h4>
+<ul id="cartList"></ul>
+<p id="total"></p>
+<button class="whatsBtn" onclick="sendOrder()">إرسال الطلب</button>
+</div>
 
-<section id="parts" class="section">
-  <h2>قطع الغيار</h2>
-  <div id="partsList" class="grid"></div>
-</section>
-
-<section id="repair" class="section">
-  <h2>الصيانة</h2>
-  <select id="repairType">
-    <option>تغيير شاشة</option>
-    <option>بطارية</option>
-    <option>سوفت وير</option>
-  </select>
-  <button onclick="sendRepair()">طلب صيانة</button>
-</section>
-
-<section id="cart" class="section">
-  <h2>سلة المشتريات</h2>
-  <ul id="cartItems"></ul>
-</section>
-
-<section id="admin" class="section">
-  <h2>لوحة التحكم</h2>
-  <ul id="ordersList"></ul>
-</section>
-
-</main>
-
-<footer>
-  <p>🔒 جميع الحقوق محفوظة © Mo2Men Telefon</p>
-  <p>🛡️ ضمان 15 يوم على الصيانة وقطع الغيار</p>
-</footer>
-
-<a class="whatsapp" href="https://wa.me/218921234133" target="_blank">💬</a>
+<!-- زر واتساب ثابت -->
+<a href="https://wa.me/218921234133"
+style="position:fixed;right:15px;bottom:15px;background:#25d366;color:#000;padding:14px;border-radius:50%;font-size:22px;text-decoration:none">💬</a>
 
 <script>
-const WHATSAPP_NUMBER="218921234133";
+const data=[
+{name:"ريسيفر HD",brand:"Other",size:"-",type:"-",price:120},
+{name:"تركيب ستلايت",brand:"Other",size:"-",type:"-",price:150},
 
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if(id==="admin") loadOrders();
-}
+{name:"Samsung 32",brand:"Samsung",size:"32",type:"LCD",price:950},
+{name:"Samsung 43",brand:"Samsung",size:"43",type:"LED",price:1650},
+{name:"Samsung 50",brand:"Samsung",size:"50",type:"Smart",price:2300},
+{name:"Samsung 55",brand:"Samsung",size:"55",type:"Android",price:2800},
 
-const products=[
- {id:1,name:"Samsung A15",price:900},
- {id:2,name:"iPhone 11",price:2500},
- {id:3,name:"Redmi 13C",price:800}
+{name:"Toshiba 32",brand:"Toshiba",size:"32",type:"LCD",price:850},
+{name:"Toshiba 43",brand:"Toshiba",size:"43",type:"LED",price:1500},
+{name:"Toshiba 55",brand:"Toshiba",size:"55",type:"Android",price:2450},
+
+{name:"Sony 32",brand:"Sony",size:"32",type:"LCD",price:1100},
+{name:"Sony 43",brand:"Sony",size:"43",type:"LED",price:1950},
+{name:"Sony 55",brand:"Sony",size:"55",type:"Smart",price:3050},
 ];
-
-const parts=[
- {name:"شاشة Samsung A15",price:600,install:100},
- {name:"بطارية iPhone 11",price:350,install:80}
-];
-
-const repairs={
- "تغيير شاشة":150,
- "بطارية":80,
- "سوفت وير":50
-};
 
 let cart=[];
 
-function loadProducts(){
-  productList.innerHTML="";
-  products.forEach(p=>{
-    productList.innerHTML+=`
-    <div class="card">
-      <h4>${p.name}</h4>
-      <p>${p.price} د</p>
-      <button onclick="addToCart('${p.name}',${p.price})">أضف للسلة</button>
-    </div>`;
-  });
+function render(){
+const b=brand.value,s=size.value,t=type.value;
+list.innerHTML="";
+data.filter(i=>{
+return (b==="all"||i.brand===b)
+&&(s==="all"||i.size===s||i.size==="-")
+&&(t==="all"||i.type===t||i.type==="-");
+}).forEach(i=>{
+list.innerHTML+=`
+<div class="card">
+<img src="https://via.placeholder.com/300x200?text=TV">
+<h4>${i.name}</h4>
+<div class="type">${i.type}</div>
+<p class="price">${i.price} د</p>
+<div class="guarantee">ضمان فحص عند الاستلام</div>
+<button class="cartBtn" onclick="addCart('${i.name}',${i.price})">إضافة للسلة</button>
+<button class="whatsBtn" onclick="whats('${i.name} - ${i.price} د')">واتساب</button>
+</div>`;
+});
 }
 
-function loadParts(){
-  partsList.innerHTML="";
-  parts.forEach(p=>{
-    partsList.innerHTML+=`
-    <div class="card">
-      <h4>${p.name}</h4>
-      <p>السعر ${p.price} د</p>
-      <p>تركيب ${p.install} د</p>
-      <button onclick="addToCart('${p.name}',${p.price+p.install})">
-      إضافة مع التركيب</button>
-    </div>`;
-  });
+function addCart(n,p){
+cart.push({n,p});
+updateCart();
 }
 
-function addToCart(name,price){
-  cart.push({name,price});
-  renderCart();
-}
-
-function renderCart(){
-  cartItems.innerHTML="";
-  let total=0;
-  cart.forEach(i=>{
-    total+=i.price;
-    cartItems.innerHTML+=`<li>${i.name} - ${i.price} د</li>`;
-  });
-  cartItems.innerHTML+=`
-    <li><strong>الإجمالي ${total} د</strong></li>
-    <input id="clientName" placeholder="اسمك">
-    <button onclick="sendOrder()">طلب واتساب</button>`;
-}
-
-function saveOrder(order){
-  let orders=JSON.parse(localStorage.getItem("orders"))||[];
-  orders.push(order);
-  localStorage.setItem("orders",JSON.stringify(orders));
+function updateCart(){
+let t=0;
+cartList.innerHTML="";
+cart.forEach(i=>{
+cartList.innerHTML+=`<li>${i.n} - ${i.p} د</li>`;
+t+=i.p;
+});
+total.innerText="الإجمالي: "+t+" د";
 }
 
 function sendOrder(){
-  const name=document.getElementById("clientName").value||"عميل";
-  let msg=`طلب جديد من ${name}%0A`;
-  let total=0;
-  cart.forEach(i=>{
-    total+=i.price;
-    msg+=`- ${i.name} (${i.price} د)%0A`;
-  });
-  msg+=`الإجمالي ${total} د`;
-  saveOrder({name,cart,total,date:new Date().toLocaleString()});
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`);
+let msg="طلب جديد:%0A";
+cart.forEach(i=>msg+=`${i.n} - ${i.p} د%0A`);
+window.open("https://wa.me/218921234133?text="+msg);
 }
 
-function sendSell(){
-  const n=sellName.value;
-  const c=sellCondition.value;
-  saveOrder({type:"بيع موبايل",n,c,date:new Date().toLocaleString()});
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=بيع موبايل:%0A${n}%0Aالحالة:${c}`);
+function whats(msg){
+window.open(`https://wa.me/218921234133?text=${encodeURIComponent(msg)}`);
 }
 
-function sendRepair(){
-  const t=repairType.value;
-  const p=repairs[t];
-  saveOrder({type:"صيانة",t,p,date:new Date().toLocaleString()});
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=طلب صيانة:%0A${t}%0Aالسعر:${p} د`);
+/* لوحة تحكم سرية */
+let clicks=0;
+admin.onclick=()=>{
+clicks++;
+if(clicks===5){
+let p=prompt("باسورد الإدارة");
+if(p==="1234") alert("المنتجات محفوظة داخل الكود ✔");
 }
+};
 
-function loadOrders(){
-  ordersList.innerHTML="";
-  const orders=JSON.parse(localStorage.getItem("orders"))||[];
-  orders.forEach(o=>{
-    ordersList.innerHTML+=`
-      <li>
-        <strong>${o.name||o.type}</strong><br>
-        ${o.total||""} ${o.p||""}<br>
-        <small>${o.date}</small>
-      </li><hr>`;
-  });
-}
-
-loadProducts();
-loadParts();
+render();
 </script>
 
 </body>
