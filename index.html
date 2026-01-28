@@ -1,107 +1,260 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>Mo2Men Telefon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mo2Men Telefon | سوق المحمول</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-    }
+<style>
+:root{
+  --bg:#0f0f0f;
+  --card:#1a1a1a;
+  --orange:#ff8c00;
+  --text:#ffffff;
+  --muted:#b5b5b5;
+}
 
-    header {
-      background: #020617;
-      padding: 20px;
-      text-align: center;
-      font-size: 26px;
-      font-weight: bold;
-      color: #38bdf8;
-    }
+*{box-sizing:border-box;font-family:Arial, sans-serif}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+}
 
-    section {
-      padding: 20px;
-    }
+a{text-decoration:none;color:inherit}
 
-    .card {
-      background: #020617;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
+header{
+  background:#000;
+  padding:20px;
+  text-align:center;
+  border-bottom:2px solid var(--orange);
+}
 
-    .card h3 {
-      margin-top: 0;
-      color: #22d3ee;
-    }
+header h1{
+  margin:0;
+  color:var(--orange);
+}
+header h2{
+  margin:5px 0 0;
+  color:var(--orange);
+  font-size:18px;
+}
 
-    .btn {
-      display: block;
-      margin-top: 15px;
-      padding: 12px;
-      text-align: center;
-      background: #22c55e;
-      color: #020617;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:15px;
+}
+nav a{
+  background:var(--orange);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:6px;
+  font-size:14px;
+}
 
-    .btn:hover {
-      opacity: 0.9;
-    }
+.section{
+  padding:30px 15px;
+}
 
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #020617;
-      color: #94a3b8;
-      font-size: 14px;
-    }
-  </style>
+.section-title{
+  background:var(--orange);
+  color:#fff;
+  display:inline-block;
+  padding:10px 20px;
+  border-radius:8px;
+  margin-bottom:20px;
+  font-size:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:15px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:10px;
+  padding:12px;
+  text-align:center;
+}
+
+.card img{
+  width:100%;
+  height:150px;
+  object-fit:contain;
+  background:#000;
+  border-radius:8px;
+}
+
+.price{
+  color:var(--orange);
+  font-weight:bold;
+  margin:8px 0;
+}
+
+.badge{
+  background:var(--orange);
+  color:#fff;
+  padding:4px 8px;
+  font-size:12px;
+  border-radius:6px;
+  display:inline-block;
+  margin-bottom:6px;
+}
+
+.btn{
+  display:block;
+  background:var(--orange);
+  color:#fff;
+  padding:8px;
+  border-radius:6px;
+  margin-top:6px;
+  font-size:14px;
+}
+
+.features{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+
+.feature{
+  background:var(--card);
+  padding:15px;
+  border-radius:10px;
+  width:160px;
+  text-align:center;
+  border:1px solid var(--orange);
+}
+
+footer{
+  background:#000;
+  padding:20px;
+  text-align:center;
+  margin-top:30px;
+  font-size:14px;
+}
+footer p{margin:6px 0}
+
+.review{
+  background:var(--card);
+  padding:15px;
+  border-radius:10px;
+}
+
+.stars{color:var(--orange)}
+</style>
 </head>
 
 <body>
 
 <header>
-  📱 Mo2Men Telefon
+  <h1>Mo2Men Telefon</h1>
+  <h2>سوق المحمول</h2>
+
+  <nav>
+    <a href="#phones">الموبايلات</a>
+    <a href="#offers">عروض اليوم</a>
+    <a href="#weekly">عروض الأسبوع</a>
+    <a href="#repair">الصيانة</a>
+    <a href="#reviews">آراء العملاء</a>
+  </nav>
 </header>
 
-<section>
-
-  <div class="card">
-    <h3>📦 الموبايلات</h3>
-    <p>Samsung - iPhone - Xiaomi - Oppo - Realme - Infinix</p>
+<!-- ضمان -->
+<section class="section">
+  <div class="features">
+    <div class="feature">🛡️ ضمان 15 يوم<br>على الصيانة وقطع الغيار</div>
+    <div class="feature">📞 طلب عبر واتساب</div>
+    <div class="feature">🔧 فنيين متخصصين</div>
+    <div class="feature">🔥 أسعار مميزة</div>
   </div>
+</section>
 
-  <div class="card">
-    <h3>🔧 الصيانة</h3>
-    <p>تغيير شاشات – بطاريات – سوفت وير – أعطال عامة</p>
+<!-- عروض اليوم -->
+<section class="section" id="offers">
+  <div class="section-title">🔥 عروض اليوم</div>
+  <div class="grid">
+    <div class="card">
+      <span class="badge">عرض اليوم</span>
+      <img src="https://i.imgur.com/ZKZQZ4C.png">
+      <h4>Samsung A15</h4>
+      <div class="price">650 د.ل</div>
+      <a class="btn" href="https://wa.me/218921234133">اطلب عبر واتساب</a>
+      <a class="btn">أضف للسلة</a>
+    </div>
   </div>
+</section>
 
-  <div class="card">
-    <h3>🎧 الإكسسوارات</h3>
-    <p>سماعات – شواحن – كفرات – اسكرينات حماية</p>
+<!-- الموبايلات -->
+<section class="section" id="phones">
+  <div class="section-title">📱 الموبايلات</div>
+  <div class="grid">
+    <div class="card">
+      <img src="https://i.imgur.com/ZKZQZ4C.png">
+      <h4>Samsung A05</h4>
+      <div class="price">520 د.ل</div>
+      <a class="btn" href="https://wa.me/218921234133">اطلب عبر واتساب</a>
+      <a class="btn">أضف للسلة</a>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/0Z8FQJr.png">
+      <h4>iPhone 11 Pro Max</h4>
+      <div class="price">1800 د.ل</div>
+      <a class="btn" href="https://wa.me/218921234133">اطلب عبر واتساب</a>
+      <a class="btn">أضف للسلة</a>
+    </div>
   </div>
+</section>
 
+<!-- الصيانة -->
+<section class="section" id="repair">
+  <div class="section-title">🔧 الصيانة وقطع الغيار</div>
   <div class="card">
-    <h3>📡 دش ورسيفرات</h3>
-    <p>بيع – تركيب – صيانة</p>
+    <p>✔️ جميع قطع الغيار والصيانة لدينا بضمان <strong>15 يوم</strong></p>
+    <p>🛡️ مختومة بختم سوق المحمول</p>
   </div>
+</section>
 
-  <a class="btn" 
-     href="https://wa.me/218921234133?text=مرحبا،%20حاب%20نستفسر%20عن%20المنتجات">
-     💬 تواصل واتساب
-  </a>
+<!-- عروض الأسبوع -->
+<section class="section" id="weekly">
+  <div class="section-title">📅 عروض الأسبوع</div>
+  <div class="grid">
+    <div class="card">
+      <span class="badge">عرض الأسبوع</span>
+      <img src="https://i.imgur.com/ZKZQZ4C.png">
+      <h4>Redmi Note 13</h4>
+      <div class="price">720 د.ل</div>
+      <a class="btn" href="https://wa.me/218921234133">اطلب عبر واتساب</a>
+    </div>
+  </div>
+</section>
 
+<!-- التقييمات -->
+<section class="section" id="reviews">
+  <div class="section-title">⭐ آراء العملاء</div>
+  <div class="grid">
+    <div class="review">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      تعامل محترم وسرعة في الصيانة
+    </div>
+    <div class="review">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      سعر ممتاز وشاشة أصلية
+    </div>
+  </div>
 </section>
 
 <footer>
-  © 2026 Mo2Men Telefon
+  <p>📍 سوق المحمول – ليبيا</p>
+  <p>📞 0921234133</p>
+  <p>© Mo2Men Telefon</p>
 </footer>
 
 </body>
