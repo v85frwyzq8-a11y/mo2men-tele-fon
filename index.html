@@ -2,28 +2,30 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<title>مؤمن استور | سوق المحمول</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mo2Men Store | سوق المحمول طبرق</title>
-
 <style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:tahoma;
-background:#f5f5f5;
-color:#fff
+:root{
+--bg:#0f0f12;
+--card:#ff9800;
+--accent:#ff9800;
+--text:#ffffff;
+--muted:#ccc;
 }
+*{box-sizing:border-box;font-family:Tahoma,Arial}
+body{margin:0;background:var(--bg);color:var(--text)}
 
 header{
 background:#000;
+padding:18px;
 text-align:center;
-padding:20px;
-border-bottom:4px solid orange
+border-bottom:3px solid var(--accent)
 }
-header h1{margin:4px 0;font-size:28px}
-header h2{margin:2px 0;font-size:16px}
-header h3{margin:2px 0;font-size:18px;color:orange}
-header h4{margin:2px 0;font-size:20px}
+header h1,header h2{
+margin:0;
+color:var(--accent)
+}
+header h2{font-size:14px;margin-top:6px}
 
 nav{
 display:flex;
@@ -31,272 +33,152 @@ flex-wrap:wrap;
 gap:8px;
 justify-content:center;
 padding:10px;
-background:#000
+background:#111
 }
 nav button{
-background:#000;
+background:var(--card);
 color:#fff;
-border:2px solid orange;
-padding:8px 12px;
-cursor:pointer;
-font-weight:bold
-}
-nav button:hover{background:orange;color:#000}
-
-.section{display:none;padding:15px}
-.section.active{display:block}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:15px
-}
-
-.card{
-background:#000;
-border:2px solid orange;
-padding:12px;
-text-align:center
-}
-.card img{
-width:100%;
-height:140px;
-object-fit:cover
-}
-.price{margin-top:6px;font-weight:bold}
-
-.whatsBtn{
-background:orange;
-color:#000;
 border:none;
-padding:10px;
+padding:9px 16px;
+border-radius:8px;
 cursor:pointer;
-margin-top:8px;
 font-weight:bold
 }
-
-.guarantee{
-color:#0f0;
-font-size:12px;
-margin-top:5px
-}
-
-input,select{
-width:90%;
-padding:8px;
-margin:6px 0
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>Mo2Men Store</h1>
-<h2>متجر مؤمن</h2>
-<h3>سوق المحمول</h3>
-<h4>طبرق</h4>
-</header>
-
-<nav>
-<button onclick="show('phones')">📱 جديد</button>
-<button onclick="show('used')">♻️ مستعمل</button>
-<button onclick="show('sell')">💰 بيع تليفونك</button>
-<button onclick="show('acc')">🎧 إكسسوارات</button>
-<button onclick="show('service')">🛠️ الصيانة وبيع قطع الغيار بالجملة</button>
-<button onclick="show('tv')">📺 شاشات وستلايت</button>
-<button onclick="show('admin')">⚙️ المطور</button>
-</nav>
-
-<section id="phones" class="section active"><div class="grid" id="phonesList"></div></section>
-<section id="used" class="section"><div class="grid" id="usedList"></div></section>
-
-<section id="sell" class="section">
-<div class="grid">
-<div class="card">
-<h3>بيع تليفونك المستعمل</h3>
-<p style="font-size:14px">
-اكتب النوع – المساحة – الحالة  
-وابعتلنا على واتساب
-</p>
-<button class="whatsBtn" onclick="whats('عاوز ابيع تليفون مستعمل')">تواصل واتساب</button>
-</div>
-</div>
-</section>
-
-<section id="acc" class="section"><div class="grid" id="accList"></div></section>
-
-<section id="service" class="section">
-<div class="grid">
-<div class="card">
-<h4>خدمات الصيانة</h4>
-<div class="guarantee">✔️ ضمان 15 يوم</div>
-<div class="guarantee">✔️ بيع قطع غيار أصلية بالجملة والتجزئة</div>
-<div class="guarantee">✔️ فحص وتشخيص داخل المحل</div>
-<button class="whatsBtn" onclick="whats('استفسار صيانة أو قطع غيار')">واتساب</button>
-</div>
-</div>
-</section>
-
-<section id="tv" class="section"><div class="grid" id="tvList"></div></section>
-
-<section id="admin" class="section">
-<div class="card">
-<h4>دخول المطور</h4>
-<input type="password" id="adminPass" placeholder="كلمة السر">
-<button class="whatsBtn" onclick="login()">دخول</button>
-
-<div id="adminPanel" style="display:none">
-<select id="cat">
-<option value="phones">جديد</option>
-<option value="used">مستعمل</option>
-<option value="acc">إكسسوارات</option>
-<option value="tv">شاشات</option>
-</select>
-<input id="pname" placeholder="اسم المنتج">
-<input id="pprice" placeholder="السعر">
-<button class="whatsBtn" onclick="addProduct()">إضافة</button>
-</div>
-</div>
-</section>
-
-<a href="https://wa.me/218921234133"
-style="position:fixed;right:15px;bottom:15px;
-background:#25d366;color:#000;
-padding:14px;border-radius:50%;
-font-size:22px;text-decoration:none">💬</a>
-
-<script>
-const phones=[
-{name:"Samsung A15",price:850},
-{name:"Redmi Note 12",price:1150},
-{name:"iPhone 11",price:2300}
-];
-const used=[
-{name:"Samsung A10 مستعمل",price:400},
-{name:"iPhone X مستعمل",price:1600}
-];
-const acc=[
-{name:"سماعة بلوتوث",price:120},
-{name:"شاحن سريع",price:90}
-];
-const tv=[
-{name:"Samsung 43 LED",price:2300},
-{name:"Toshiba 50 LCD",price:2000},
-{name:"Sony 55 Smart",price:3050}
-];
-
-function show(id){
-document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-}
-
-function render(data,id){
-let box=document.getElementById(id);
-box.innerHTML="";
-data.forEach(i=>{
-box.innerHTML+=`
-<div class="card">
-<img src="https://via.placeholder.com/300x200">
-<h4>${i.name}</h4>
-<div class="price">${i.price} د</div>
-</div>`;
-});
-}
-
-function whats(msg){
-window.open(`https://wa.me/218921234133?text=${encodeURIComponent(msg)}`);
-}
-
-function login(){
-if(adminPass.value==="8577"){adminPanel.style.display="block";}
-else alert("كلمة السر غلط");
-}
-
-function addProduct(){
-let o={name:pname.value,price:pprice.value};
-if(cat.value==="phones"){phones.push(o);render(phones,"phonesList")}
-if(cat.value==="used"){used.push(o);render(used,"usedList")}
-if(cat.value==="acc"){acc.push(o);render(acc,"accList")}
-if(cat.value==="tv"){tv.push(o);render(tv,"tvList")}
-}
-
-render(phones,"phonesList");
-render(used,"usedList");
-render(acc,"accList");
-render(tv,"tvList");
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<title>سوق المحمول | Mo2Men Store</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-:root{--bg:#0f0f12;--card:#1b1b22;--accent:#00ff9c;--sell:#ff9800;--text:#fff;--muted:#aaa}
-*{box-sizing:border-box;font-family:Tahoma,Arial}
-body{margin:0;background:var(--bg);color:var(--text)}
-header{background:#000;padding:16px;text-align:center;border-bottom:3px solid var(--accent)}
-header h1{margin:0;color:var(--accent)}
-header p{margin:6px 0 0;color:var(--muted)}
-
-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:#111}
-nav button{background:var(--card);color:var(--text);border:1px solid var(--accent);padding:8px 14px;border-radius:6px;cursor:pointer}
-nav button:hover{background:var(--accent);color:#000}
-.sell-btn{background:var(--sell)!important;color:#000!important;font-weight:bold}
 
 .container{padding:20px}
-.section-title{margin:25px 0 10px;color:var(--accent)}
-.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px}
-.product{background:var(--card);border-radius:12px;padding:10px;text-align:center;border:1px solid #222}
-.product img{width:100%;height:150px;object-fit:contain;background:#000;border-radius:8px}
-.product h3{font-size:13px;margin:8px 0;line-height:1.4}
-.product p{color:var(--accent);font-weight:bold}
-.product button{width:100%;border:none;background:var(--accent);color:#000;padding:7px;border-radius:6px;font-weight:bold;cursor:pointer}
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:15px
+}
+.product{
+background:var(--card);
+border-radius:14px;
+padding:10px;
+text-align:center
+}
+.product img{
+width:100%;
+height:150px;
+object-fit:contain;
+background:#000;
+border-radius:10px
+}
+.product h3{
+font-size:13px;
+margin:8px 0;
+color:#fff
+}
+.product p{
+font-weight:bold;
+color:#fff
+}
+.product button{
+width:100%;
+border:none;
+background:#000;
+color:#fff;
+padding:8px;
+border-radius:8px;
+cursor:pointer
+}
 
 .cart,.whatsapp,.admin-btn{
-position:fixed;left:15px;padding:12px 18px;border-radius:50px;font-weight:bold;cursor:pointer;z-index:99}
+position:fixed;
+left:15px;
+padding:12px 18px;
+border-radius:50px;
+font-weight:bold;
+cursor:pointer;
+z-index:99
+}
 .cart{bottom:15px;background:var(--accent);color:#000}
-.whatsapp{bottom:80px;background:#25d366;color:#fff}
-.admin-btn{bottom:145px;background:#673ab7;color:#fff}
+.whatsapp{
+bottom:80px;
+background:#25d366;
+color:#fff
+}
+.admin-btn{
+bottom:145px;
+background:#673ab7;
+color:#fff
+}
 
-#sell{background:#111;padding:50px 20px;margin-top:40px;border-top:4px solid var(--sell)}
-#sell h2{text-align:center;color:var(--sell)}
-#sell p{text-align:center;color:#ccc}
+#sell{
+background:#111;
+padding:40px 20px;
+margin-top:40px;
+border-top:4px solid var(--accent)
+}
+#sell h2{text-align:center;color:var(--accent)}
 
 .admin-panel{
-display:none;position:fixed;top:0;right:0;width:100%;height:100%;
-background:rgba(0,0,0,.9);z-index:999;padding:20px;overflow:auto}
-.admin-box{max-width:520px;margin:auto;background:#000;padding:20px;border-radius:12px}
+display:none;
+position:fixed;
+top:0;right:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.9);
+z-index:999;
+padding:20px
+}
+.admin-box{
+max-width:520px;
+margin:auto;
+background:#000;
+padding:20px;
+border-radius:12px
+}
 .admin-box input,.admin-box select{
-width:100%;padding:12px;margin-bottom:10px;border-radius:6px;border:none}
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border-radius:6px;
+border:none
+}
 .admin-box button{
-width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);font-weight:bold;cursor:pointer}
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:var(--accent);
+font-weight:bold
+}
 
-footer{background:#000;padding:20px;text-align:center;color:var(--muted)}
+footer{
+background:#000;
+padding:20px;
+text-align:center;
+color:var(--muted)
+}
+
 .watermark{
-position:fixed;top:50%;left:50%;
+position:fixed;
+top:50%;
+left:50%;
 transform:translate(-50%,-50%) rotate(-20deg);
-font-size:120px;color:rgba(255,255,255,0.04);pointer-events:none}
+font-size:120px;
+color:rgba(255,255,255,0.04);
+pointer-events:none
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>سوق المحمول</h1>
-<p>Mo2Men Store – طبرق | سوق العرب</p>
+<h1>مؤمن استور</h1>
+<h2>سوق المحمول – طبرق سوق العرب</h2>
 </header>
 
 <nav>
-<button onclick="filterCat('all')">🏠 الكل</button>
-<button onclick="filterCat('phones')">📱 الموبايلات</button>
-<button onclick="filterCat('maintenance')">🛠️ الصيانة وقطع الغيار</button>
-<button onclick="filterCat('accessories')">🎧 الإكسسوارات</button>
-<button onclick="filterCat('audio')">🔊 الصوتيات</button>
-<button class="sell-btn" onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">🔁 بيع تلفونك</button>
+<button onclick="filterCat('all')">الكل</button>
+<button onclick="filterCat('phones')">الموبايلات</button>
+<button onclick="filterCat('maintenance')">الصيانة</button>
+<button onclick="filterCat('accessories')">الإكسسوارات</button>
+<button onclick="filterCat('audio')">الصوتيات</button>
+<button onclick="document.getElementById('sell').scrollIntoView({behavior:'smooth'})">
+بيع تلفونك
+</button>
 </nav>
 
 <div class="container">
@@ -304,124 +186,53 @@ font-size:120px;color:rgba(255,255,255,0.04);pointer-events:none}
 </div>
 
 <div class="cart">🛒 (<span id="cartCount">0</span>)</div>
-<div class="whatsapp" onclick="sendWhatsApp()">📲 واتساب</div>
-<div class="admin-btn" onclick="openAdmin()">⚙️ لوحة المطوّر</div>
+<div class="whatsapp" onclick="sendWhatsApp()">واتساب</div>
+<div class="admin-btn" onclick="openAdmin()">لوحة المطور</div>
 
 <section id="sell">
-<h2>📱 بيع تلفونك</h2>
-<p>نقيّم جهازك بأفضل سعر – جديد أو مستعمل – تعامل ثقة</p>
-<p>📍 طبرق – سوق العرب | سوق المحمول</p>
+<h2>بيع تلفونك</h2>
+<p style="text-align:center;color:#ccc">
+تقييم فوري – أفضل سعر – تعامل ثقة
+</p>
 </section>
 
-<!-- لوحة المطوّر -->
 <div class="admin-panel" id="adminPanel">
 <div class="admin-box">
-<h3 style="text-align:center">إضافة منتج</h3>
 <input id="aName" placeholder="اسم المنتج">
-<input id="aPrice" placeholder="السعر بالدينار">
-<input id="aImg" placeholder="رابط الصورة (اختياري)">
+<input id="aPrice" placeholder="السعر">
+<input id="aImg" placeholder="رابط الصورة">
 <select id="aCat">
 <option value="phones">موبايلات</option>
 <option value="maintenance">صيانة</option>
 <option value="accessories">إكسسوارات</option>
 <option value="audio">صوتيات</option>
 </select>
-<button onclick="addAdminProduct()">➕ إضافة المنتج</button>
-<button onclick="closeAdmin()" style="background:#f44336;margin-top:10px">❌ إغلاق</button>
+<button onclick="addAdminProduct()">إضافة المنتج</button>
+<button onclick="closeAdmin()" style="background:#f44336;margin-top:10px">إغلاق</button>
 </div>
 </div>
 
 <footer>
+📞 واتساب الطلبات: 0921234133 <br>
+⭐ الشكاوى والتقييم: 0921234122 <br>
 جميع الأجهزة وقطع الغيار أصلية 100% <br>
-بضمان وختم سوق المحمول <br>
 © مؤمن
 </footer>
 
-<div class="watermark">Mo2Men</div>
+<div class="watermark">مؤمن</div>
 
 <script>
-/* صورة افتراضية احترافية */
-const PH_IMG="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Smartphone_icon.svg/512px-Smartphone_icon.svg.png";
+const IMG="https://upload.wikimedia.org/wikipedia/commons/3/3a/Smartphone_icon.svg";
 
-/* كل المنتجات – كل الموديلات اللي كتبتها */
-let products = JSON.parse(localStorage.getItem("products")) || [
-/* Samsung */
-{name:"Samsung A04",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A03",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A03 Core",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A05",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A06",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A07",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A05s",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A16",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A26",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A36",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A55",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung A56",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung S22 Ultra",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung S23 Ultra",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung S24 Ultra",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung S25 Ultra",price:0,cat:"phones",img:PH_IMG},
-{name:"Samsung S26 Ultra",price:0,cat:"phones",img:PH_IMG},
-
-/* iPhone */
-{name:"iPhone X",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone X Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 11 Pro",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 11 Pro Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 12 Pro Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 13 Pro Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 14 Pro Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 15 Pro Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 16 Pro Max",price:0,cat:"phones",img:PH_IMG},
-{name:"iPhone 17 Pro Max",price:0,cat:"phones",img:PH_IMG},
-
-/* Xiaomi / Poco */
-{name:"Redmi Note 14",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi Note 14 Pro",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi Note 14 Pro+",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi A5",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi C21Y",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi C25",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi 14C",price:0,cat:"phones",img:PH_IMG},
-{name:"Redmi 15C",price:0,cat:"phones",img:PH_IMG},
-{name:"Poco C71",price:0,cat:"phones",img:PH_IMG},
-{name:"Poco F7",price:0,cat:"phones",img:PH_IMG},
-{name:"Poco X7",price:0,cat:"phones",img:PH_IMG},
-{name:"Poco X7 Pro",price:0,cat:"phones",img:PH_IMG},
-
-/* Honor */
-{name:"Honor X9c",price:0,cat:"phones",img:PH_IMG},
-{name:"Honor X9p",price:0,cat:"phones",img:PH_IMG},
-{name:"Honor X9d",price:0,cat:"phones",img:PH_IMG},
-{name:"Honor X7c",price:0,cat:"phones",img:PH_IMG},
-{name:"Honor X6c",price:0,cat:"phones",img:PH_IMG},
-
-/* Infinix */
-{name:"Infinix Smart 10 (64/4)",price:0,cat:"phones",img:PH_IMG},
-{name:"Infinix Smart 10 (128/4)",price:0,cat:"phones",img:PH_IMG},
-{name:"Infinix Hot 60i (128/6)",price:0,cat:"phones",img:PH_IMG},
-
-/* Tecno */
-{name:"Tecno Camon 40 Pro (256/12 5G)",price:0,cat:"phones",img:PH_IMG},
-{name:"Tecno Spark Slim (256/8)",price:0,cat:"phones",img:PH_IMG},
-{name:"Tecno Go 2 (64/3)",price:0,cat:"phones",img:PH_IMG},
-{name:"Tecno Go 2 (128/4)",price:0,cat:"phones",img:PH_IMG},
-
-/* صيانة – شاشات وبطاريات */
-{name:"شاشة أصلية iPhone",price:0,cat:"maintenance",img:PH_IMG},
-{name:"بطارية أصلية iPhone",price:0,cat:"maintenance",img:PH_IMG},
-{name:"شاشة أصلية Samsung",price:0,cat:"maintenance",img:PH_IMG},
-
-/* إكسسوارات */
-{name:"شاحن أصلي",price:0,cat:"accessories",img:PH_IMG},
-{name:"سماعة بلوتوث",price:0,cat:"accessories",img:PH_IMG},
-{name:"كفر + لزقة شاشة",price:0,cat:"accessories",img:PH_IMG},
-
-/* صوتيات */
-{name:"سماعات سيارة",price:0,cat:"audio",img:PH_IMG},
-{name:"منظومة صوت",price:0,cat:"audio",img:PH_IMG},
-{name:"باور بانك",price:0,cat:"audio",img:PH_IMG}
+let products=JSON.parse(localStorage.getItem("products"))||[
+{name:"Samsung A04",price:0,cat:"phones",img:IMG},
+{name:"iPhone 15 Pro Max",price:0,cat:"phones",img:IMG},
+{name:"Redmi Note 14 Pro+",price:0,cat:"phones",img:IMG},
+{name:"Honor X9c",price:0,cat:"phones",img:IMG},
+{name:"Tecno Camon 40 Pro",price:0,cat:"phones",img:IMG},
+{name:"شاشة أصلية iPhone",price:0,cat:"maintenance",img:IMG},
+{name:"شاحن أصلي",price:0,cat:"accessories",img:IMG},
+{name:"منظومة صوت",price:0,cat:"audio",img:IMG}
 ];
 
 let cart=[];
@@ -429,15 +240,17 @@ let cart=[];
 function save(){localStorage.setItem("products",JSON.stringify(products));}
 
 function render(list){
-const box=document.getElementById("products");
-box.innerHTML="";
-list.forEach((p)=>{
-box.innerHTML+=`
+productsBox=document.getElementById("products");
+productsBox.innerHTML="";
+list.forEach(p=>{
+productsBox.innerHTML+=`
 <div class="product">
 <img src="${p.img}">
 <h3>${p.name}</h3>
 <p>${p.price} د.ل</p>
-<button onclick="cart.push(p);cartCount.innerText=cart.length">إضافة للسلة</button>
+<button onclick="cart.push(p);cartCount.innerText=cart.length">
+إضافة للسلة
+</button>
 </div>`;
 });
 }
@@ -447,13 +260,13 @@ c==="all"?render(products):render(products.filter(p=>p.cat===c));
 }
 
 function sendWhatsApp(){
-let msg="طلب من سوق المحمول%0A";
-cart.forEach(p=>msg+=`- ${p.name} (${p.price})%0A`);
-window.open("https://wa.me/218000000000?text="+msg);
+let msg="طلب من مؤمن استور%0A";
+cart.forEach(p=>msg+=`- ${p.name}%0A`);
+window.open("https://wa.me/218921234133?text="+msg);
 }
 
 function openAdmin(){
-let pass=prompt("كلمة السر:");
+let pass=prompt("كلمة السر");
 if(pass==="85778577")adminPanel.style.display="block";
 else alert("غير مصرح");
 }
@@ -463,11 +276,10 @@ function addAdminProduct(){
 products.push({
 name:aName.value,
 price:aPrice.value||0,
-img:aImg.value||PH_IMG,
+img:aImg.value||IMG,
 cat:aCat.value
 });
-save();
-render(products);
+save();render(products);
 alert("تمت الإضافة");
 aName.value=aPrice.value=aImg.value="";
 }
